@@ -1,0 +1,22 @@
+{
+  "name": "banggood",
+  "version": "1.0.0",
+  "description": "banggood scraper",
+  "main": "index.js",
+  "dependencies": {
+    "grunt": "^0.4.5"
+  },
+  "devDependencies": {
+    "grunt-contrib-coffee": "^0.13.0",
+    "grunt-contrib-watch": "^0.6.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://yuzong@bitbucket.org/shopdogg/banggood.git"
+  },
+  "author": "Jonghun Yu",
+  "license": "ISC"
+}
