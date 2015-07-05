@@ -1,0 +1,12 @@
+default: &default
+  selectors:
+    product_page: "goodlist_1 li a"
+  urls:
+    - address: "http://www.banggood.com/Wholesale-RC-Quadcopters-c-1848.html"
+      category: "toy/quadcopters"
+
+development:
+  <<: *default
+
+production:
+  <<: *default

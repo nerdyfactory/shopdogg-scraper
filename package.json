@@ -10,6 +10,7 @@
     "grunt-cli": "^0.1.13",
     "grunt-contrib-coffee": "^0.13.0",
     "grunt-contrib-watch": "^0.6.1",
+    "konfig": "^0.2.1",
     "kue": "^0.9.3",
     "moment": "^2.10.3",
     "numeral": "^1.5.3",

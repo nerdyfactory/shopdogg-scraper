@@ -1,6 +1,0 @@
-default: &default
-  - url: ""
-    category: ""
-
-production: &production
-  <<: *default
