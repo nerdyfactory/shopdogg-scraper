@@ -11,7 +11,7 @@
     "grunt-contrib-coffee": "^0.13.0",
     "grunt-contrib-watch": "^0.6.1",
     "konfig": "^0.2.1",
-    "kue": "^0.9.3",
+    "kue": "https://registry.npmjs.org/kue/-/kue-0.9.3.tgz",
     "moment": "^2.10.3",
     "numeral": "^1.5.3",
     "request": "^2.58.0",
@@ -19,7 +19,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall" : "node -e \"var s='../app',d='node_modules/app',fs=require('fs');fs.exists(d,function(d){d||fs.symlinkSync(s,d,'dir')});\""
   },
   "repository": {
     "type": "git",
