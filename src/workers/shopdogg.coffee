@@ -10,5 +10,5 @@ cheerio = require('cheerio')
 request = Promise.promisify require 'request'
 
 module.exports.scrape = (job, done) ->
-  debug job.url
+  debug job.data.url
   done()

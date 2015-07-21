@@ -1,13 +1,14 @@
 # requires
 Promise = require 'bluebird'
 kue =  require 'kue'
-queue = Promise.promisifyAll kue.createQueue()
+#queue = Promise.promisifyAll kue.createQueue()
+queue = kue.createQueue()
+request = Promise.promisify require 'request'
 cluster = require('cluster')
 config = require('konfig')()
 debug = require('debug') 'scraper'
 _ = require 'underscore'
 cheerio = require('cheerio')
-request = Promise.promisify require 'request'
 
 #worker
 shopdogg = require('src/workers/shopdogg')
@@ -32,22 +33,19 @@ parentMain = ->
   publishUrls(urlList)
 
 childMain = ->
-  while true
-    queue.processAsync('shopdogg', config.common.scraper.concurrency)
-    .spread(shopdogg.scrape)
+  debug 'childMain started'
+  queue.process('shopdogg', config.common.scraper.concurrency, shopdogg.scrape)
 
 publishUrls = (urlList) ->
   console.log "started publishUrls!"
   setTimeout publishUrls, config.common.scraper.interval
+  queue.on "job complete", ->
+    console.log "finished publishUrls!"
   Promise.map urlList, (url) ->
     publishProductPages(url)
-  .then ->
-    "job complete"
-  .then(queue.onAsync)
-  .then ->
-    console.log "finished publishUrls!"
   
 publishProductPages = (url) ->
+  $ = undefined
   request({url: url.address, method: 'get'})
   .spread (res, body) ->
     $ = cheerio.load body
@@ -56,11 +54,14 @@ publishProductPages = (url) ->
       urls.push $(this).attr('href')
     urls
   .map (url) ->
-    queue.createAsync('shopdogg', {url: url})
+    queue.create('shopdogg', { url: url }).save()
+  .then ->
     url.address = $(config.banggood.selectors.next_page).attr('href')
     return unless url.address
     console.log "go to naxt page url: " + url.address
     publishProductPages url
+  .catch (e) ->
+    console.log e
 
 module.exports = main
 
