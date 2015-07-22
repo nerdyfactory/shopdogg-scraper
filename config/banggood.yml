@@ -1,8 +1,13 @@
 default: &default
   selectors:
-    product_list: ".goodlist_1"
-    product_page: "li a"
-    next_page: "a[title='Next page']"
+    list_page:
+      product_list: ".goodlist_1"
+      product_page: "li a"
+      next_page: "a[title='Next page']"
+    product_page:
+      sku: ".sku span"
+      name: ".good_main h1"
+      price: 
   urls:
     - address: "http://www.banggood.com/Wholesale-RC-Quadcopters-c-1848.html"
       category: "toy/quadcopters"

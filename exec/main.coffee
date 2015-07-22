@@ -39,24 +39,23 @@ childMain = ->
 publishUrls = (urlList) ->
   console.log "started publishUrls!"
   setTimeout publishUrls, config.common.scraper.interval
-  queue.on "job complete", ->
-    console.log "finished publishUrls!"
   Promise.map urlList, (url) ->
     publishProductPages(url)
   
 publishProductPages = (url) ->
   $ = undefined
+  selectors = config.banggood.selectors.list_page
   request({url: url.address, method: 'get'})
   .spread (res, body) ->
     $ = cheerio.load body
     urls = []
-    $(config.banggood.selectors.product_list).find(config.banggood.selectors.product_page).each (i, elem)->
+    $(selectors.product_list).find(selectors.product_page).each (i, elem)->
       urls.push $(this).attr('href')
     urls
   .map (url) ->
     queue.create('shopdogg', { url: url }).save()
   .then ->
-    url.address = $(config.banggood.selectors.next_page).attr('href')
+    url.address = $(selectors.next_page).attr('href')
     return unless url.address
     console.log "go to naxt page url: " + url.address
     publishProductPages url
