@@ -11,7 +11,7 @@ _ = require 'underscore'
 cheerio = require('cheerio')
 
 #worker
-shopdogg = require('src/workers/shopdogg')
+banggood = require('src/workers/banggood')
 
 
 # main
@@ -34,7 +34,7 @@ parentMain = ->
 
 childMain = ->
   debug 'childMain started'
-  queue.process('shopdogg', config.common.scraper.concurrency, shopdogg.scrape)
+  queue.process('shopdogg', config.common.scraper.concurrency, banggood.scrape)
 
 publishUrls = (urlList) ->
   console.log "started publishUrls!"
