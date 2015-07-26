@@ -18,7 +18,7 @@ module.exports.scrape = (job, done) ->
     product =
       sku: $(selector.sku).text()
       name: $(selector.name).text()
-      price:
+      #price:
       #shipping_methods:
       #images: []
       #description:

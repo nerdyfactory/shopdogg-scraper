@@ -1,4 +1,5 @@
-# requires
+require('app-module-path').addPath(__dirname+'/..')
+
 Promise = require 'bluebird'
 kue =  require 'kue'
 #queue = Promise.promisifyAll kue.createQueue()
