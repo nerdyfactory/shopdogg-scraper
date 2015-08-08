@@ -1,17 +1,18 @@
-# requires
-kue = require('kue')
-cluster = require('cluster')
-queue = kue.createQueue()
-config = require('konfig')()
-debug = require('debug') 'shopdoggWorker'
+util    = require 'util'
 Promise = require 'bluebird'
-_ = require 'underscore'
-cheerio = require('cheerio')
-request = Promise.promisify require 'request'
+kue     = require 'kue'
+request = require 'request'
+cheerio = require 'cheerio'
+_       = require 'underscore'
+config  = require('konfig')()
+debug   = require('debug') 'worker:banggood'
 
-module.exports.scrape = (job, done) ->
+queue   = kue.createQueue()
+request = Promise.promisify request
+log     = util.log
+
+main = (job, done) ->
   selector = config.banggood.selectors.product_page
-  $ = undefined
   request({url: job.data.url, method: 'get'})
   .spread (res, body) ->
     $ = cheerio.load body
@@ -25,5 +26,8 @@ module.exports.scrape = (job, done) ->
       #options: []
     debug product
     product
+    log "Publishing #{product.sku}"
   .then ->
     done()
+
+module.exports = main

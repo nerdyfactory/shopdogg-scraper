@@ -16,6 +16,7 @@
     "moment": "^2.10.3",
     "numeral": "^1.5.3",
     "request": "^2.58.0",
+    "require-dir": "^0.3.0",
     "underscore": "^1.8.3"
   },
   "devDependencies": {},

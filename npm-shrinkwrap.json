@@ -1680,6 +1680,11 @@
         }
       }
     },
+    "require-dir": {
+      "version": "0.3.0",
+      "from": "require-dir@*",
+      "resolved": "https://registry.npmjs.org/require-dir/-/require-dir-0.3.0.tgz"
+    },
     "underscore": {
       "version": "1.8.3",
       "from": "https://registry.npmjs.org/underscore/-/underscore-1.8.3.tgz",
