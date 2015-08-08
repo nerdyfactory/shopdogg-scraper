@@ -103,10 +103,7 @@ main = (job, done) ->
         time = $(this).attr('time')
         fee = +$(this).attr('oriprice') # USD
         product.shipping_options.push({type: type, time: time, fee: fee})
-        # TODO
-        # Translate following to Korean
-        # Shipping type - "Air Parcel Register", "Expedited Shipping Service"...etc
-        # Shipping time - "7-25 business days", "10-15 business days"...etc
+
       debug JSON.stringify product, null, 2
       log "Publishing #{product.sku}"
       product
