@@ -107,9 +107,9 @@ main = (job, done) ->
         # Translate following to Korean
         # Shipping type - "Air Parcel Register", "Expedited Shipping Service"...etc
         # Shipping time - "7-25 business days", "10-15 business days"...etc
-        debug JSON.stringify product, null, 2
-        log "Publishing #{product.sku}"
-        product
+      debug JSON.stringify product, null, 2
+      log "Publishing #{product.sku}"
+      product
   .then ->
     done()
 
