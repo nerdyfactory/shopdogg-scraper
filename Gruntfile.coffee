@@ -6,6 +6,7 @@ module.exports = (grunt) ->
         options:
           bare: true
         src: [
+          'main.coffee',
           '*/**/*.coffee'
         ]
         ext: '.js'
