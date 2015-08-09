@@ -13,8 +13,8 @@ queue       = kue.createQueue()
 request     = Promise.promisify request
 log         = util.log
 
-worker      = requireDir('src/workers')
-publisher   = requireDir('src/publishers')
+worker      = requireDir('workers')
+publisher   = requireDir('publishers')
 
 main = ->
   #parent process
