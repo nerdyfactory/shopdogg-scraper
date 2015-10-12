@@ -1,16 +1,11 @@
 cluster     = require 'cluster'
 util        = require 'util'
-Promise     = require 'bluebird'
 kue         = require 'kue'
-request     = require 'request'
-_           = require 'underscore'
-cheerio     = require 'cheerio'
 requireDir  = require 'require-dir'
 config      = require('konfig')()
 debug       = require('debug') 'main'
 
 queue       = kue.createQueue()
-request     = Promise.promisify request
 log         = util.log
 
 worker      = requireDir('workers')
