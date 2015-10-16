@@ -4,7 +4,7 @@ Promise = require 'bluebird'
 AdmZip  = require 'adm-zip'
 csv     = Promise.promisify require('csv-parse')
  
-main = (buf) ->
+unzipAndParse = (buf) ->
   zip = new AdmZip(buf)
   zipEntries = zip.getEntries()
   csvInfo  = _.find zipEntries, (z) -> z.name.indexOf('product_info') != -1
@@ -26,9 +26,9 @@ main = (buf) ->
       p.price = numeral().unformat(i['Product Price(USD)'])
       p.options = i['Options'].split('\n')
       p.images = _.pluck(_.where(images, {'Product SKU': p.sku}), 'Image Url')
-      #p.description = i['Product Description']
+      p.description = i['Product Description']
       products.push p
     , { concurrency: 16 }
     products
 
-module.exports = main
+module.exports = unzipAndParse

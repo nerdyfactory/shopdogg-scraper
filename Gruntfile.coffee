@@ -6,13 +6,14 @@ module.exports = (grunt) ->
         options:
           bare: true
         src: [
-          'main.coffee',
-          '*/**/*.coffee'
+          './*.coffee',
+          'src/**/*.coffee'
         ]
         ext: '.js'
     watch:
       files: [
-        '*/**/*.coffee'
+          './*.coffee',
+        'src/**/*.coffee'
       ]
       tasks: ['coffee']
   grunt.loadNpmTasks 'grunt-contrib-coffee'

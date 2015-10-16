@@ -1,0 +1,6 @@
+default: &default
+  "Toys and Hobbies":
+    auction: "46330300"
+    #auction: "46330200"
+  "Sports & Outdoor":
+    auction: "48141400"
