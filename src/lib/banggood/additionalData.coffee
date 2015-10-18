@@ -3,7 +3,7 @@ request = Promise.promisify require 'request'
 cheerio = require 'cheerio'
 numeral = require 'numeral'
 
-main = (url) ->
+additionalData = (url) ->
   request({url: url, method: 'get'})
   .get(1)
   .then (body) ->
@@ -13,7 +13,6 @@ main = (url) ->
   
     old_price = $('.old').attr('oriprice')
     product.old_price = numeral().unformat(old_price) if old_price
-
     product.available = if $('.buynow')[0] then true else false
   
     # ----------------- Shipping Options -----------------
@@ -88,4 +87,4 @@ main = (url) ->
       #console.log JSON.stringify product, null, 2
       product
 
-module.exports = main
+module.exports = additionalData

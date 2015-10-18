@@ -1,7 +1,7 @@
 default: &default
   urls:
-    - address: "https://www.banggood.com/index.php?com=account&t=dropshipImportDownload&&d_warehouse=CN&d_cid[]=133&d_cid[]=1729&d_cid[]=1848&sortKey=1&keywords=&add_date_start=&add_date_end=&page=1"
-      category: "toy/quadcopters"
+    - address: "https://www.banggood.com/index.php?com=account&t=dropshipImportDownload&&d_warehouse=CN&d_cid%5B%5D=896&d_cid%5B%5D=1760&d_cid%5B%5D=1894&d_cid%5B%5D=0&sortKey=1&keywords=&add_date_start=&add_date_end=&page=1"
+      category: "sport-outdoor/fishing/tools&equipments"
 
 development:
   <<: *default

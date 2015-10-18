@@ -14,7 +14,7 @@ queue       = kue.createQueue()
 request     = Promise.promisifyAll require 'request'
 lib         = requireDir '../lib/banggood'
 
-main = (job, done) ->
+banggoodWorker = (job, done) ->
   options = lib.reqOptions.downloadZip(job.data.pids)
   options.headers['Cookie'] = 'banggood_SID='+job.data.sid
   r = request(options)
@@ -43,6 +43,7 @@ main = (job, done) ->
         product.shipping_options = data.shipping_options
         debug JSON.stringify product, null, 2
         log "Publishing product: #{product.sku}"
+        queue.create('auction', product).save()
   , { concurrency: 16 }
   .then ->
     done()
@@ -50,4 +51,4 @@ main = (job, done) ->
     log err.stack
 
 
-module.exports = main
+module.exports = banggoodWorker

@@ -13,10 +13,10 @@ queue       = kue.createQueue()
 request     = Promise.promisifyAll require 'request'
 lib         = requireDir '../lib/banggood'
 
-main = ->
+banggoodPublishers = ->
   urlList = _.values config.banggood.urls
   log "start banggood publisher!"
-  setTimeout main, config.common.scraper.interval # this needs to be tested
+  setTimeout banggoodPublishers, config.common.scraper.interval # this needs to be tested
 
   request.postAsync(lib.reqOptions.login())
   .get(0)
@@ -52,5 +52,5 @@ publishProductPages = (url, sid) ->
   .catch (err) ->
     log err.stack
 
-module.exports = main
+module.exports = banggoodPublishers
 
