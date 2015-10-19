@@ -34,7 +34,7 @@ auctionWorker = (job, done) ->
   .then(done)
   .catch (e) ->
     log "failed to import product!!"
-    log JSON.stringfiy job.data
+    log JSON.stringify job.data
     log e
     log e.stack
 

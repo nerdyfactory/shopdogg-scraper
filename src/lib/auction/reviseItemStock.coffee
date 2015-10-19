@@ -42,14 +42,20 @@ reviseItemStock = (prod, code = null, rate) ->
                ChangeType: "Add"
 
     productOptions = []
+    reg = /\(\+US\$(\d.+)\)/
     productPrice = itemPrice(prod.price, rate)
     _.each prod.options, (option) ->
+      if reg.test(option) # check option contains additional price
+        price = itemPrice(parseFloat(reg.exec(option)[1]), rate)
+        option = option.replace(reg, "")
+      else
+        price = 0
       tmp =
         attributes:
           xmlns: "http://schema.auction.co.kr/Arche.Service.xsd"
           Section: "옵션"
           Text: option
-          Price: 0
+          Price: price
           Quantity: "99"
           #ChangeType: "Add"
       exstingInfo = _.findWhere(exstingOrderStock, { "Text": option })
