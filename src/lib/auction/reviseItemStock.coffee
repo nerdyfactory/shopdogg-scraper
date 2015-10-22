@@ -11,8 +11,8 @@ reviseItemStock = (prod, code = null, rate) ->
   (if code then getExistingStockInfo(code) else Promise.resolve(null))
   .then (res) ->
     console.log "stockInfo:#{JSON.stringify res}"
-    exstingOrderStock = res.ViewItemStockResult?.ItemStock?.StockStandAlone
-    exstingOrderStock = _.pluck(exstingOrderStock, 'attributes')
+    existingOrderStock = res.ViewItemStockResult?.ItemStock?.StockStandAlone
+    existingOrderStock = _.pluck(exstingOrderStock, 'attributes')
     options =
       req:
         attributes:
@@ -42,22 +42,28 @@ reviseItemStock = (prod, code = null, rate) ->
                ChangeType: "Add"
 
     productOptions = []
+    reg = /\(\+US\$(\d.+)\)/
     productPrice = itemPrice(prod.price, rate)
     _.each prod.options, (option) ->
+      if reg.test(option) # check option contains additional price
+        price = itemPrice(parseFloat(reg.exec(option)[1]), rate)
+        option = option.replace(reg, "")
+      else
+        price = 0
       tmp =
         attributes:
           xmlns: "http://schema.auction.co.kr/Arche.Service.xsd"
           Section: "옵션"
           Text: option
-          Price: 0
+          Price: price
           Quantity: "99"
           #ChangeType: "Add"
-      exstingInfo = _.findWhere(exstingOrderStock, { "Text": option })
-      unless exstingInfo
+      existingInfo = _.findWhere(existingOrderStock, { "Text": option })
+      unless existingInfo
         tmp['attributes']['ChangeType'] = "Add"
       else
         tmp['attributes']['ChangeType'] = "Update"
-        tmp['attributes']['StockNo'] = parseInt(exstingInfo.StockNo)
+        tmp['attributes']['StockNo'] = parseInt(existingInfo.StockNo)
       productOptions.push tmp
 
     shippingOptions = []

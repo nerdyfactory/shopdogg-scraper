@@ -5,4 +5,3 @@ auction(data)
 .then ->
   console.log "finished"
   process.exit(0)
-
