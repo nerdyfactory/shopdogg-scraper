@@ -2,8 +2,10 @@ Promise = require 'bluebird'
 request = Promise.promisify require 'request'
 cheerio = require 'cheerio'
 numeral = require 'numeral'
-
-additionalData = (url) ->
+config  = require('konfig')()
+qs      = require 'querystring'
+                          
+additionalData = (url, sid) ->
   request({url: url, method: 'get'})
   .get(1)
   .then (body) ->
@@ -56,7 +58,7 @@ additionalData = (url) ->
     # Ajax get shipping list
     curWarehouse = $('#curWarehouse').val()
     products_id = $('#products_id').val()
-    data = 'com=product&t=getShipments'
+    data = 'com=product&t=initShipments'
     data += '&warehouse='+curWarehouse
     data += '&products_id='+products_id
   
@@ -66,16 +68,34 @@ additionalData = (url) ->
       while i < selOptions.valueIds.length
         data += '&value_ids[]=' + selOptions.valueIds[i]
         i++
-   
     bgUrl = "http://www.banggood.com/index.php?"+data
-  
-    request({url: bgUrl, method: 'get', json: true })
-    .get(1)
-    .then (body) ->
-      $$ = cheerio.load(body.html)
+    headers = { "Cookie": "banggood_SID=#{sid}" }
+    recursiveReq = (shippingUrl) ->
+      request({url: shippingUrl, method: 'get', json: true, headers: headers })
+      .get(1)
+      .then (body) ->
+        $$ = cheerio.load(body.shipmentBox)
+        unless $$('.inputChangePrice').attr('label')
+          console.log body
+          throw new Error "shipping to #{config.banggood.shipping_country.name} is not available #{url}"
+        unless $$('.inputChangePrice').attr('label').indexOf(config.banggood.shipping_country.name) > -1
+          params =
+            com: 'ajax'
+            t: 'setDefaltCountry'
+            country: config.banggood.shipping_country.code
+            currency: 'USD'
+          updateCountryCode = 'http://www.banggood.com/index.php?'+qs.stringify(params)
+          request({url: updateCountryCode, method: 'get', json: true, headers: headers })
+          .spread (res, body)->
+            recursiveReq(shippingUrl)
+        else
+          $$
+
+    recursiveReq(bgUrl)
+    .then (cheerioData) ->
       product.shipping_options = []
-      $$('.inputChangePrice').each ->
-        type = $(this).attr('label').split('Korea, Republic of via')[1].trim()
+      cheerioData('.inputChangePrice').each ->
+        type = $(this).attr('label').split(config.banggood.shipping_country.name)[1].trim()
         time = $(this).attr('time')
         fee = +$(this).attr('oriprice') # USD
         product.shipping_options.push({type: type, time: time, fee: fee})
@@ -83,8 +103,6 @@ additionalData = (url) ->
         # Translate following to Korean
         # Shipping type - "Air Parcel Register", "Expedited Shipping Service"...etc
         # Shipping time - "7-25 business days", "10-15 business days"...etc
-  
-      #console.log JSON.stringify product, null, 2
       product
 
 module.exports = additionalData

@@ -33,7 +33,7 @@ banggoodWorker = (job, done) ->
       reject err
   .then(lib.unzipAndParse)
   .map (product) ->
-    lib.additionalData(product.url)
+    lib.additionalData(product.url, job.data.sid)
     .then (data) ->
       unless data.available
         log "Product not available: #{product.sku}"
@@ -44,7 +44,7 @@ banggoodWorker = (job, done) ->
         debug JSON.stringify product, null, 2
         log "Publishing product: #{product.sku}"
         queue.create('auction', product).save()
-  , { concurrency: 16 }
+  , { concurrency: 4 }
   .then ->
     done()
   .catch (err) ->
