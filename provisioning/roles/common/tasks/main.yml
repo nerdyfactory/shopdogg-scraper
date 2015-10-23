@@ -1,0 +1,30 @@
+---
+- name: Update apt
+  apt: update_cache=yes force=yes
+  sudo: yes
+
+- name: Install basic dependencies
+  apt: pkg={{item}} force=yes
+  sudo: yes
+  with_items:
+  - build-essential
+  - python-pycurl
+  - curl
+  - htop
+  - git
+  - make
+  - cmake
+  - sqlite3
+  - libsqlite3-dev
+  - autoconf
+  - bison
+  - libssl-dev
+  - libyaml-dev
+  - libreadline6
+  - libreadline6-dev
+  - zlib1g
+  - zlib1g-dev
+
+- name: Install charset
+  shell: cd;bash -lc "locale-gen ko_KR.UTF-8"
+  sudo: yes

@@ -1,0 +1,7 @@
+---
+- hosts: vagrant
+  user: "{{user}}"
+  roles:
+  - role: common 
+  - role: node
+  - role: redis
