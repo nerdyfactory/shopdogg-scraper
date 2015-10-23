@@ -116,6 +116,8 @@ getImageList = (images) ->
   opt
 
 getHtmlDescription = (desc) ->
+  desc = desc.replace(/\<[ ]*a[^>]+\>/, "")
+  desc = desc.replace(/\<\/a\>/, "")
   desc = "<img alt='' src='http://i.imgur.com/uaF17Qk.jpg' style='width: 800px;' /><br>" + desc + "<img alt='' src='http://i.imgur.com/QiIQSyu.jpg' style='width: 800px;' />"
   description =
     attributes:
