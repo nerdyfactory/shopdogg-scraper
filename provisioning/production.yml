@@ -1,5 +1,5 @@
 ---
-- hosts: vagrant
+- hosts: production
   user: "{{user}}"
   roles:
   - role: common 

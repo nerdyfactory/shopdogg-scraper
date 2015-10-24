@@ -1,8 +1,4 @@
 ---
-- name: Update apt
-  apt: update_cache=yes force=yes
-  sudo: yes
-
 - name: Install basic dependencies
   apt: pkg={{item}} force=yes
   sudo: yes
@@ -24,7 +20,4 @@
   - libreadline6-dev
   - zlib1g
   - zlib1g-dev
-
-- name: Install charset
-  shell: cd;bash -lc "locale-gen ko_KR.UTF-8"
-  sudo: yes
+  - vim
