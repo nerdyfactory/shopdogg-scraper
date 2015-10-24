@@ -1,4 +1,8 @@
 ---
+- name: Update apt
+  apt: update_cache=yes force=yes
+  sudo: yes
+
 - name: Install basic dependencies
   apt: pkg={{item}} force=yes
   sudo: yes
