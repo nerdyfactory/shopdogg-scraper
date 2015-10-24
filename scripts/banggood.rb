@@ -44,23 +44,58 @@ class Banggood
   end
 end
 
-@categories = [{:name=>"Electronics", :cid=>"1091"},
- {:name=>"Cell Phones & Accessories ", :cid=>"140"},
- {:name=>"Lights & Lighting", :cid=>"1697"},
- {:name=>"Sports & Outdoor", :cid=>"896"},
- {:name=>"Toys and Hobbies", :cid=>"133"},
- {:name=>"Computer & Networking", :cid=>"155"},
- {:name=>"Clothing and Apparel", :cid=>"274"},
- {:name=>"Health & Beauty", :cid=>"892"},
- {:name=>"Automobiles & Motorcycles", :cid=>"1134"},
- {:name=>"Home and Garden", :cid=>"1031"},
- {:name=>"Jewelry and Watch", :cid=>"170"},
- {:name=>"Intimate Apparel", :cid=>"1098"},
- {:name=>"Apple Accessories", :cid=>"1696"},
- {:name=>"Bags & Shoes", :cid=>"3798"}]
-
-@client = Banggood.new
-@client.login 'email', 'password'
-@categories.each do |cate|
-  cate[:kids] = Banggood.cli.get_sub_category cate[:cid]
+#@categories = [{:name=>"Electronics", :cid=>"1091"},
+# {:name=>"Cell Phones & Accessories ", :cid=>"140"},
+# {:name=>"Lights & Lighting", :cid=>"1697"},
+# {:name=>"Sports & Outdoor", :cid=>"896"},
+# {:name=>"Toys and Hobbies", :cid=>"133"},
+# {:name=>"Computer & Networking", :cid=>"155"},
+# {:name=>"Clothing and Apparel", :cid=>"274"},
+# {:name=>"Health & Beauty", :cid=>"892"},
+# {:name=>"Automobiles & Motorcycles", :cid=>"1134"},
+# {:name=>"Home and Garden", :cid=>"1031"},
+# {:name=>"Jewelry and Watch", :cid=>"170"},
+# {:name=>"Intimate Apparel", :cid=>"1098"},
+# {:name=>"Apple Accessories", :cid=>"1696"},
+# {:name=>"Bags & Shoes", :cid=>"3798"}]
+#
+#@client = Banggood.new
+#@client.login 'login', 'pwd'
+#@categories.each do |cate|
+#  cate[:kids] = @client.get_sub_category cate[:cid]
+#  next if cate[:kids].empty?
+#  cate[:kids].each do |c|
+#    c[:kids] = @client.get_sub_category c[:cid]
+#    next if cate[:kids].empty?
+#    c[:kids].each do |c2|
+#      c2[:kids] = @client.get_sub_category c2[:cid]
+#      if c2[:kids].empty?
+#
+#      end
+#      c2[:kids].each do |c3|
+#        c3[:kids] = @client.get_sub_category c3[:cid]
+#      end
+#    end
+#  end
+#end
+@categories.each do |c1|
+  if c1[:kids].empty?
+    @aa << c1[:name] + "," + c1[:cid] + "\n"
+    next
+  end
+  c1[:kids].each do |c2|
+    if c2[:kids].empty?
+      @aa << c1[:name] + "," + c1[:cid] + "," + c2[:name] + "," + c2[:cid] + "\n"
+      next
+    end
+    c2[:kids].each do |c3|
+      if c3[:kids].empty?
+        @aa << c1[:name] + "," + c1[:cid] + "," + c2[:name] + "," + c2[:cid] + "," + c3[:name] + "," + c3[:cid] + "\n"
+        next
+      end
+      c3[:kids].each do |c4|
+        @aa << c1[:name] + "," + c1[:cid] + "," + c2[:name] + "," + c2[:cid] + "," + c3[:name] + "," + c3[:cid] + "," + c4[:name] + "," + c4[:cid] + "\n"
+      end
+    end
+  end
 end
