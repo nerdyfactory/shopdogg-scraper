@@ -1,5 +1,6 @@
 node_modules/*
 **/*.js
+!shipitfile.js
 **/*.swp
 npm-debug.log
 .vagrant

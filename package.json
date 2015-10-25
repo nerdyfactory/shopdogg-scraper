@@ -24,7 +24,9 @@
     "soap": "^0.10.3",
     "underscore": "^1.8.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "shipit-deploy": "^2.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://yuzong@bitbucket.org/shopdogg/banggood.git"
