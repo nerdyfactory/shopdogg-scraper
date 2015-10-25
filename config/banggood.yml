@@ -3,7 +3,7 @@ default: &default
     code: "113"
     name: "Korea, Republic of via"
     #code: "223"
-    #name: "United States"
+    #name: "United States via"
   shipping_text:
     "Standard Shipping": "기본배송"
     "Air Parcel Register": "항공택배"

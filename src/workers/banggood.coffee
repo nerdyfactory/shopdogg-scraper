@@ -46,6 +46,9 @@ banggoodWorker = (job, done) ->
         debug JSON.stringify product, null, 2
         log "Publishing product: #{product.sku}"
         queue.create('auction', product).save()
+    .catch (err) ->
+      log err.stack
+
   , { concurrency: 4 }
   .then ->
     done()

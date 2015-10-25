@@ -56,18 +56,17 @@ additionalData = (url, sid) ->
       result
   
     # Ajax get shipping list
-    curWarehouse = $('#curWarehouse').val()
     products_id = $('#products_id').val()
     data = 'com=product&t=initShipments'
-    data += '&warehouse='+curWarehouse
+    data += '&warehouse=CN'
     data += '&products_id='+products_id
   
-    selOptions = getSelectedOptions()
-    if selOptions.valueIds.length > 0
-      i = 0
-      while i < selOptions.valueIds.length
-        data += '&value_ids[]=' + selOptions.valueIds[i]
-        i++
+    #selOptions = getSelectedOptions()
+    #if selOptions.valueIds.length > 0
+    #  i = 0
+    #  while i < selOptions.valueIds.length
+    #    data += '&value_ids[]=' + selOptions.valueIds[i]
+    #    i++
     bgUrl = "http://www.banggood.com/index.php?"+data
     headers = { "Cookie": "banggood_SID=#{sid}" }
     recursiveReq = (shippingUrl) ->
@@ -76,8 +75,8 @@ additionalData = (url, sid) ->
       .then (body) ->
         $$ = cheerio.load(body.shipmentBox)
         unless $$('.inputChangePrice').attr('label')
-          console.log body
-          throw new Error "shipping to #{config.banggood.shipping_country.name} is not available #{url}"
+          throw new Error "shipping to #{config.banggood.shipping_country.name} is not available #{shippingUrl}"
+          
         unless $$('.inputChangePrice').attr('label').indexOf(config.banggood.shipping_country.name) > -1
           params =
             com: 'ajax'
