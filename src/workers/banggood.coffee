@@ -41,6 +41,8 @@ banggoodWorker = (job, done) ->
         if data.old_price? and data.old_price > product.price
           product.old_price = data.old_price
         product.shipping_options = data.shipping_options
+        product.auctionCode  = job.data.auction
+        product.keyword = job.data.keyword
         debug JSON.stringify product, null, 2
         log "Publishing product: #{product.sku}"
         queue.create('auction', product).save()

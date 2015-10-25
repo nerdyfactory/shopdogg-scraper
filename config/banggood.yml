@@ -1,12 +1,19 @@
 default: &default
   shipping_country:
-    #code: "113"
-    #name: "Korea, Republic of"
-    code: "223"
-    name: "United States"
-  urls:
-    - address: "https://www.banggood.com/index.php?com=account&t=dropshipImportDownload&&d_warehouse=CN&d_cid%5B%5D=896&d_cid%5B%5D=1760&d_cid%5B%5D=1894&d_cid%5B%5D=0&sortKey=1&keywords=&add_date_start=&add_date_end=&page=1"
-      category: "sport-outdoor/fishing/tools&equipments"
+    code: "113"
+    name: "Korea, Republic of"
+    #code: "223"
+    #name: "United States"
+  categories:
+    - cids: "1091,2153,3533,3480"
+      auction: "1940100"
+      keyword: "3D프린터"
+    - cids: "1091,2153,3533,2363"
+      auction: "1940100"
+      keyword: "3D프린터"
+    - cids: "1091,2153,3533,2511"
+      auction: "1940100"
+      keyword: "3D프린터"
 
 development:
   <<: *default
