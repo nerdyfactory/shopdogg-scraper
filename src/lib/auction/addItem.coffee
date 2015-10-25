@@ -34,7 +34,8 @@ getNewItemInfo = (prod, rate) ->
         xmlns: "http://schema.auction.co.kr/Arche.Sell3.Service.xsd"
         BrandName: brand
         CategoryCode: prod.auctionCode
-        Name: "#{prod.keyword} #{prod.name}".substring(0, 49)
+        #Name: "#{prod.keyword} #{prod.name}".substring(0, 50)
+        Name: prod.name.substring(0, 50)
         Price: itemPrice(prod.price, rate)
         ItemStatusType: "New"
         DescriptionVerType: "New"
