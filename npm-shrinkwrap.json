@@ -1465,12 +1465,12 @@
     },
     "redis": {
       "version": "2.2.3",
-      "from": "redis@*",
+      "from": "https://registry.npmjs.org/redis/-/redis-2.2.3.tgz",
       "resolved": "https://registry.npmjs.org/redis/-/redis-2.2.3.tgz",
       "dependencies": {
         "double-ended-queue": {
           "version": "2.1.0-0",
-          "from": "double-ended-queue@>=2.1.0-0 <3.0.0",
+          "from": "https://registry.npmjs.org/double-ended-queue/-/double-ended-queue-2.1.0-0.tgz",
           "resolved": "https://registry.npmjs.org/double-ended-queue/-/double-ended-queue-2.1.0-0.tgz"
         }
       }
@@ -1776,6 +1776,50 @@
       "version": "0.3.0",
       "from": "https://registry.npmjs.org/require-dir/-/require-dir-0.3.0.tgz",
       "resolved": "https://registry.npmjs.org/require-dir/-/require-dir-0.3.0.tgz"
+    },
+    "soap": {
+      "version": "0.10.3",
+      "from": "soap@*",
+      "resolved": "https://registry.npmjs.org/soap/-/soap-0.10.3.tgz",
+      "dependencies": {
+        "debug": {
+          "version": "0.7.4",
+          "from": "debug@>=0.7.4 <0.8.0",
+          "resolved": "https://registry.npmjs.org/debug/-/debug-0.7.4.tgz"
+        },
+        "lodash": {
+          "version": "2.4.2",
+          "from": "lodash@>=2.4.1 <2.5.0",
+          "resolved": "https://registry.npmjs.org/lodash/-/lodash-2.4.2.tgz"
+        },
+        "sax": {
+          "version": "1.1.4",
+          "from": "sax@>=0.6.0",
+          "resolved": "https://registry.npmjs.org/sax/-/sax-1.1.4.tgz"
+        },
+        "selectn": {
+          "version": "0.9.6",
+          "from": "selectn@>=0.9.6 <0.10.0",
+          "resolved": "https://registry.npmjs.org/selectn/-/selectn-0.9.6.tgz"
+        },
+        "strip-bom": {
+          "version": "0.3.1",
+          "from": "strip-bom@>=0.3.1 <0.4.0",
+          "resolved": "https://registry.npmjs.org/strip-bom/-/strip-bom-0.3.1.tgz",
+          "dependencies": {
+            "first-chunk-stream": {
+              "version": "0.1.0",
+              "from": "first-chunk-stream@>=0.1.0 <0.2.0",
+              "resolved": "https://registry.npmjs.org/first-chunk-stream/-/first-chunk-stream-0.1.0.tgz"
+            },
+            "is-utf8": {
+              "version": "0.2.0",
+              "from": "is-utf8@>=0.2.0 <0.3.0",
+              "resolved": "https://registry.npmjs.org/is-utf8/-/is-utf8-0.2.0.tgz"
+            }
+          }
+        }
+      }
     },
     "underscore": {
       "version": "1.8.3",
