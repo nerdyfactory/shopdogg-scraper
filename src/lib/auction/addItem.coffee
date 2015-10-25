@@ -26,8 +26,6 @@ addItem = (product, code = null, rate) ->
     sendSoapRequest('ShoppingService', apiName, options)
 
 getNewItemInfo = (prod, rate) ->
-  categoryCode = config.category[prod.category].auction
-  throw new Error "No category Info:#{prod.category}" unless categoryCode
   brand = _.findWhere(prod.product_properties_attributes, { "property_name" : "brand" })?.value
   getBrandCode(brand)
   .then (brandCode) ->
@@ -35,8 +33,8 @@ getNewItemInfo = (prod, rate) ->
       attributes:
         xmlns: "http://schema.auction.co.kr/Arche.Sell3.Service.xsd"
         BrandName: brand
-        CategoryCode: categoryCode
-        Name: prod.name.substring(0, 50)
+        CategoryCode: prod.auctionCode
+        Name: "#{prod.keyword} #{prod.name}".substring(0, 50)
         Price: itemPrice(prod.price, rate)
         ItemStatusType: "New"
         DescriptionVerType: "New"

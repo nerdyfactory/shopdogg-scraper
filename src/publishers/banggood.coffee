@@ -14,7 +14,22 @@ request     = Promise.promisifyAll require 'request'
 lib         = requireDir '../lib/banggood'
 
 banggoodPublishers = ->
-  urlList = _.values config.banggood.urls
+  categories = _.map config.banggood.categories, (category) ->
+    auctionCode = category.auction
+    auctionCode = "0" + auctionCode for [0..(7-category.auction.length)]
+    category.auction = auctionCode
+    category.cids = category.cids.split(",")
+    category.cids = [category.cids] unless _.isArray category.cids
+    params =
+      com: "account"
+      t: "dropshipImportDownload"
+      d_warehouse: "CN"
+      "d_cid[]": category.cids
+      sortKey: "1"
+      page: "1"
+    category.url = "https://www.banggood.com/index.php?" + qs.stringify(params)
+    category
+
   log "start banggood publisher!"
   setTimeout banggoodPublishers, config.common.scraper.interval # this needs to be tested
 
@@ -25,12 +40,12 @@ banggoodPublishers = ->
     @sid = sid.split(';')[0].split('=')[1]
     debug "sid: #{@sid}"
 
-    Promise.map urlList, (url) ->
-      publishProductPages(url, @sid)
+    Promise.map categories, (category) ->
+      publishProductPages(category, @sid)
 
 
-publishProductPages = (url, sid) ->
-  options = lib.reqOptions.dropshipCenter(url.address)
+publishProductPages = (category, sid) ->
+  options = lib.reqOptions.dropshipCenter(category.url)
   options.headers['Cookie'] = 'banggood_SID='+sid
 
   request.getAsync(options)
@@ -41,14 +56,14 @@ publishProductPages = (url, sid) ->
     $('.goodlist_1 :checkbox').each ->
       pids.push $(this).val()
     debug "productIds: #{pids}"
-    queue.create('shopdogg', { pids: pids, sid: sid }).save()
+    queue.create('shopdogg', { pids: pids, sid: sid, auction: category.auction, keyword: category.keyword }).save()
     pageNumber = $("a[title='Next page']").attr('page')
     return unless pageNumber
-    nextUrl = qs.parse(url.address)
+    nextUrl = qs.parse(category.url)
     nextUrl.page = pageNumber
-    url.address = qs.unescape(qs.stringify(nextUrl))
-    log "go to next page url: #{url.address}"
-    publishProductPages url, sid
+    category.url = qs.unescape(qs.stringify(nextUrl))
+    log "go to next page url: #{category.url}"
+    publishProductPages category, sid
   .catch (err) ->
     log err.stack
 
