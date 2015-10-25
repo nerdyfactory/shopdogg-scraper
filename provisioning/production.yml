@@ -5,3 +5,4 @@
   - role: common 
   - role: node
   - role: redis
+  - role: scraper
