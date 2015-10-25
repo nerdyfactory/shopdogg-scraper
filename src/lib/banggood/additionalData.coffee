@@ -98,7 +98,11 @@ additionalData = (url, sid) ->
         type = $(this).attr('label').split(config.banggood.shipping_country.name)[1].trim()
         time = $(this).attr('time')
         fee = +$(this).attr('oriprice') # USD
-        product.shipping_options.push({type: type, time: time, fee: fee})
+        product.shipping_options.push
+          type: config.banggood.shipping_text[type] || type
+          time: time.replace("business days", "영업일")
+          fee: fee
+        
         # TODO
         # Translate following to Korean
         # Shipping type - "Air Parcel Register", "Expedited Shipping Service"...etc

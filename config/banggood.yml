@@ -1,9 +1,14 @@
 default: &default
   shipping_country:
     code: "113"
-    name: "Korea, Republic of"
+    name: "Korea, Republic of via"
     #code: "223"
     #name: "United States"
+  shipping_text:
+    "Standard Shipping": "기본배송"
+    "Air Parcel Register": "항공택배"
+    "EMS Express Mail Service": "우체국국제배송"
+    "Expedited Shipping Service": "빠른국제특송"
   categories:
     - cids: "1091,2153,3533,3480"
       auction: "1940100"
