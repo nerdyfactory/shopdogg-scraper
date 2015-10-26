@@ -11,6 +11,7 @@ redis       = require 'lib/redis'
 
 auctionWorker = (job, done) ->
   rate = 1200
+  console.log "get #{job.data.sku}"
   item = job.data
   redis.hgetAsync('auction', item.sku).bind({})
   .then (code) ->
