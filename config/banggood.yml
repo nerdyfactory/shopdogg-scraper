@@ -1,4 +1,6 @@
 default: &default
+  currency: "USD"
+  #currency: "AUD"
   shipping_country:
     code: "113"
     name: "Korea, Republic of via"

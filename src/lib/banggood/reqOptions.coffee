@@ -1,4 +1,5 @@
-qs = require 'querystring'
+qs      = require 'querystring'
+config  = require('konfig')()
 
 getHeaders = ->
   headers =
@@ -50,7 +51,11 @@ downloadZip = (pids) ->
     encoding: null
   options
 
+getCookie = (sid) ->
+  "banggood_SID=#{sid}; default_ship_country=#{config.banggood.shipping_country.code}; currency=#{config.banggood.currency}"
 
+
+module.exports.getCookie = getCookie
 module.exports.login = login
 module.exports.dropshipCenter = dropshipCenter
 module.exports.downloadZip = downloadZip

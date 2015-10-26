@@ -8,7 +8,6 @@ requireDir  = require 'require-dir'
 prettyBytes = require 'pretty-bytes'
 config      = require('konfig')()
 debug       = require('debug') 'worker:banggood'
-
 log         = util.log
 queue       = kue.createQueue()
 request     = Promise.promisifyAll require 'request'
@@ -16,7 +15,7 @@ lib         = requireDir '../lib/banggood'
 
 banggoodWorker = (job, done) ->
   options = lib.reqOptions.downloadZip(job.data.pids)
-  options.headers['Cookie'] = 'banggood_SID='+job.data.sid
+  options.headers['Cookie'] =  lib.reqOptions.getCookie(job.data.sid)
   r = request(options)
   new Promise (resolve, reject) ->
     data = []
