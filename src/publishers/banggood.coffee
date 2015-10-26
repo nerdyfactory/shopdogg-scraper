@@ -15,9 +15,9 @@ lib         = requireDir '../lib/banggood'
 
 banggoodPublishers = ->
   categories = _.map config.banggood.categories, (category) ->
-    auctionCode = category.auction
-    auctionCode = "0" + auctionCode for [0..(7-category.auction.length)]
-    category.auction = auctionCode
+    #auctionCode = category.auction
+    #auctionCode = "0" + auctionCode for [0..(7-category.auction.length)]
+    #category.auction = auctionCode
     category.cids = category.cids.split(",")
     category.cids = [category.cids] unless _.isArray category.cids
     params =
