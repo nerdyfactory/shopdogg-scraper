@@ -49,10 +49,9 @@ banggoodWorker = (job, done) ->
       log err.stack
 
   , { concurrency: 4 }
-  .then ->
-    done()
   .catch (err) ->
     log err.stack
+  .finally(done)
 
 
 module.exports = banggoodWorker

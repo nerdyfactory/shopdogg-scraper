@@ -32,11 +32,11 @@ auctionWorker = (job, done) ->
   .then (res) ->
     log "ReviseItemStock" + JSON.stringify res
     lib.reviseItemSelling(this.itemID)
-  .then(done)
   .catch (e) ->
     log "failed to import product!!"
     log JSON.stringify job.data
     log e
     log e.stack
+  .finally(done)
 
 module.exports = auctionWorker
