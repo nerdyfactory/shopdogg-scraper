@@ -12,7 +12,7 @@ reviseItemStock = (prod, code = null, rate) ->
   .then (res) ->
     console.log "stockInfo:#{JSON.stringify res}"
     existingOrderStock = res.ViewItemStockResult?.ItemStock?.StockStandAlone
-    existingOrderStock = _.pluck(exstingOrderStock, 'attributes')
+    existingOrderStock = _.pluck(existingOrderStock, 'attributes')
     options =
       req:
         attributes:
@@ -78,12 +78,12 @@ reviseItemStock = (prod, code = null, rate) ->
           Quantity: "99"
           #ChangeType: "Add"
           
-      exstingInfo = _.findWhere(exstingOrderStock, { "Text": optionText })
-      unless exstingInfo
+      existingInfo = _.findWhere(existingOrderStock, { "Text": optionText })
+      unless existingInfo
         tmp['attributes']['ChangeType'] = "Add"
       else
         tmp['attributes']['ChangeType'] = "Update"
-        tmp['attributes']['StockNo'] = parseInt(exstingInfo.StockNo)
+        tmp['attributes']['StockNo'] = parseInt(existingInfo.StockNo)
       productOptions.push tmp
     options['req']['ItemStock']['StockStandAlone'] = productOptions
     console.log "options:#{JSON.stringify options}"
