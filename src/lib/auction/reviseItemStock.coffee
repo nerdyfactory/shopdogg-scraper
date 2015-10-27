@@ -43,7 +43,6 @@ reviseItemStock = (prod, code = null, rate) ->
 
     productOptions = []
     reg = /\(\+US\$(\d.+)\)/
-    productPrice = itemPrice(prod.price, rate)
     _.each prod.options, (option) ->
       if reg.test(option) # check option contains additional price
         price = itemPrice(parseFloat(reg.exec(option)[1]), rate)
@@ -66,9 +65,12 @@ reviseItemStock = (prod, code = null, rate) ->
         tmp['attributes']['StockNo'] = parseInt(existingInfo.StockNo)
       productOptions.push tmp
 
+    productPrice = itemPrice(prod.price, rate)
     shippingOptions = []
     _.each prod.shipping_options, (shippingOption) ->
       optionText = "#{shippingOption.type}(#{shippingOption.time})"
+      shippingPrice = itemPrice(shippingOption.fee, rate)
+      return if shippingPrice > (productPrice/2)
       tmp =
         attributes:
           xmlns: "http://schema.auction.co.kr/Arche.Service.xsd"

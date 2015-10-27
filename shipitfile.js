@@ -12,7 +12,7 @@ module.exports = function (shipit) {
       keepReleases: 2,
       deleteOnRollback: false,
       //key: '/path/to/key',
-      shallowClone: false
+      shallowClone: true
     },
     production: {
       servers: 'shopdogg@188.166.229.186'

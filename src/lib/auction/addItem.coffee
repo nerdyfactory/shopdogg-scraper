@@ -40,8 +40,9 @@ getNewItemInfo = (prod, rate) ->
         ItemStatusType: "New"
         DescriptionVerType: "New"
         ItemCode: prod.sku
+        AdvertiseMessage: "[해외직구]"
       ItemPicture: getImageList(prod.images)
-      ItemContentsHtml: getHtmlDescription(prod.description)
+      ItemContentsHtml: getHtmlDescription(prod)
       ItemReturn: getItemReturn()
       ShippingFee: getShippingFee()
       ChildProductSafeCert:
@@ -114,10 +115,12 @@ getImageList = (images) ->
     opt["Picture#{i+1}B"] = img if i < 3
   opt
 
-getHtmlDescription = (desc) ->
-  desc = desc.replace(/\<[ ]*a[^>]+\>/, "")
-  desc = desc.replace(/\<\/a\>/, "")
-  desc = "<img alt='' src='http://i.imgur.com/uaF17Qk.jpg' style='width: 800px;' /><br>" + desc + "<img alt='' src='http://i.imgur.com/QiIQSyu.jpg' style='width: 800px;' />"
+getHtmlDescription = (prod) ->
+  desc = "<img src='http://i.imgur.com/vgDbMW2.jpg' style='width: 800px;' /><br>"
+  _.each prod.images, (image) ->
+    desc = desc + "<img src='#{image}' style='width: 800px;' /><br>"
+  desc = desc + prod.description.replace(/\<[ ]*a[^>]+\>/, "").replace(/\<\/a\>/, "")
+  desc = desc + "<img alt='' src='http://i.imgur.com/lrlN28J.jpg' style='width: 800px;' />"
   description =
     attributes:
       ItemHtml: desc
