@@ -10,7 +10,6 @@ itemPrice       = require 'lib/itemPrice'
 reviseItemStock = (prod, code = null, rate) ->
   (if code then getExistingStockInfo(code) else Promise.resolve(null))
   .then (res) ->
-    console.log "stockInfo:#{JSON.stringify res}"
     existingOrderStock = res.ViewItemStockResult?.ItemStock?.StockStandAlone
     existingOrderStock = _.pluck(existingOrderStock, 'attributes')
     options =
@@ -88,8 +87,6 @@ reviseItemStock = (prod, code = null, rate) ->
         tmp['attributes']['StockNo'] = parseInt(existingInfo.StockNo)
       productOptions.push tmp
     options['req']['ItemStock']['StockStandAlone'] = productOptions
-    console.log "options:#{JSON.stringify options}"
-
     sendSoapRequest('ShoppingService', 'ReviseItemStock', options)
 
 getExistingStockInfo = (code) ->

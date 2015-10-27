@@ -41,6 +41,8 @@ getNewItemInfo = (prod, rate) ->
         DescriptionVerType: "New"
         ItemCode: prod.sku
         AdvertiseMessage: "[해외직구]"
+        WishKeyword: "해외직구"
+        WishKeywordOptIn: true
       ItemPicture: getImageList(prod.images)
       ItemContentsHtml: getHtmlDescription(prod)
       ItemReturn: getItemReturn()
@@ -65,7 +67,7 @@ getItemReturn = ->
       attributes:
         ReturnFee: "40000"
         ReturnNotice: "반품시 왕복 국제배송비 부담"
-        ReturnTel: "010-3123-1069"
+        ReturnTel: "010-8675-1080"
 
 
 getUpdateItemInfo = (prod, code, rate) ->
@@ -116,11 +118,12 @@ getImageList = (images) ->
   opt
 
 getHtmlDescription = (prod) ->
-  desc = "<img src='http://i.imgur.com/vgDbMW2.jpg' style='width: 800px;' /><br>"
+  
+  desc = "<img src='http://i.imgur.com/3DL3QQ7.png'/><br><br><img src='http://i.imgur.com/vgDbMW2.jpg' style='width: 800px;' /><br><br>"
   _.each prod.images, (image) ->
-    desc = desc + "<img src='#{image}' style='width: 800px;' /><br>"
+    desc = desc + "<img src='#{image}'/><br>"
   desc = desc + prod.description.replace(/\<[ ]*a[^>]+\>/, "").replace(/\<\/a\>/, "")
-  desc = desc + "<img alt='' src='http://i.imgur.com/lrlN28J.jpg' style='width: 800px;' />"
+  desc = desc + "<br><img alt='' src='http://i.imgur.com/Zvx1sRp.jpg' style='width: 800px;' />"
   description =
     attributes:
       ItemHtml: desc
