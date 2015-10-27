@@ -77,6 +77,9 @@ getUpdateItemInfo = (prod, code, rate) ->
       ItemID: code
       Price: itemPrice(prod.price, rate)
       DescriptionVerType: "New"
+      AdvertiseMessage: "[해외직구]"
+      WishKeyword: "해외직구"
+      WishKeywordOptIn: true
     ItemContentsHtml: getHtmlDescription(prod)
   Promise.resolve options
 
