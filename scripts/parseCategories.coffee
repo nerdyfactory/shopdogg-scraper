@@ -4,21 +4,19 @@ parse   = Promise.promisify require('csv-parse')
 yaml    = require 'yamljs'
 
 csvFile = 'banggood.csv'   # input
-ymlFile = 'categories.yml' # output
+ymlFile = 'config/categories.yml' # output
 
-p = {}
-p.categories = []
+p = []
 
 fs.readFileAsync(csvFile, 'utf8')
 .then (data) ->
   parse data, {columns: true}
 .map (data) ->
+  return unless data['auction']
   c = {}
   c.cids = [data['cid1'],data['cid2'],data['cid3'],data['cid4']].filter((val) -> val).join(',')
   c.auction = data['auction']
-  c.keyword = data['keyword']
-  p.categories.push(c)
+  c.keyword = data['keyword'] || ""
+  p.push(c)
 .then ->
   fs.writeFileAsync ymlFile, yaml.stringify(p)
-
-

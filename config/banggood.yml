@@ -11,22 +11,6 @@ default: &default
     "Air Parcel Register": "항공택배"
     "EMS Express Mail Service": "우체국국제배송"
     "Expedited Shipping Service": "빠른국제특송"
-  categories:
-    #- cids: "1091,2153,3533,3480"
-    #  auction: "1940100"
-    #  keyword: "3D프린터"
-    #- cids: "1091,2153,3533,2363"
-    #  auction: "1940100"
-    #  keyword: "3D프린터"
-    #- cids: "1091,2153,3533,2511"
-    #  auction: "1940100"
-    #  keyword: "3D프린터"
-    - cids: "1091,2153,2744"
-      auction: "50270109"
-      keyword: "라즈베리파이"
-    - cids: "1091,2153,2152"
-      auction: "50270109"
-      keyword: "라즈베리파이"
 
 development:
   <<: *default

@@ -7,17 +7,15 @@ _           = require 'underscore'
 requireDir  = require 'require-dir'
 config      = require('konfig')()
 debug       = require('debug') 'publisher:banggood'
-
 log         = util.log
 queue       = kue.createQueue()
 request     = Promise.promisifyAll require 'request'
 lib         = requireDir '../lib/banggood'
+YAML        = require 'yamljs'
+categories  = YAML.load 'config/categories.yml'
 
 banggoodPublishers = ->
-  categories = _.map config.banggood.categories, (category) ->
-    #auctionCode = category.auction
-    #auctionCode = "0" + auctionCode for [0..(7-category.auction.length)]
-    #category.auction = auctionCode
+  categories = _.map categories, (category) ->
     category.cids = category.cids.split(",")
     category.cids = [category.cids] unless _.isArray category.cids
     params =
