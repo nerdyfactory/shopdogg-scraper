@@ -11,14 +11,12 @@ redis       = require 'lib/redis'
 
 auctionWorker = (job, done) ->
   rate = 1200
-  console.log "get #{job.data.sku}"
   item = job.data
   redis.hgetAsync('auction', item.sku).bind({})
   .then (code) ->
     this.code = code
     lib.addItem(item, this.code, rate)
   .then (res) ->
-    log "addItem" + JSON.stringify res
     this.itemID = res.AddItemResult?.attributes?.ItemID || res.ReviseItemResult?.attributes?.ItemID
     throw new Error "failed to addItem:#{res}" unless this.itemID
     unless this.code
@@ -30,13 +28,12 @@ auctionWorker = (job, done) ->
   .then ->
     lib.reviseItemStock(item, this.itemID, rate)
   .then (res) ->
-    log "ReviseItemStock" + JSON.stringify res
     lib.reviseItemSelling(this.itemID)
   .catch (e) ->
     log "failed to import product!!"
     log JSON.stringify job.data
     log e
-    log e.stack
+    #log e.stack
   .finally(done)
 
 module.exports = auctionWorker

@@ -37,7 +37,7 @@ sendSoapRequest = (service, name, data) ->
     debug err
     result
   .catch (e) ->
-    log this.soapClient.lastRequest
+    #log this.soapClient.lastRequest
     log e.body
     throw new Error e.body
 
