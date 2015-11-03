@@ -18,6 +18,10 @@ banggoodPublishers = ->
   categories = _.map categories, (category) ->
     category.cids = category.cids.split(",")
     category.cids = [category.cids] unless _.isArray category.cids
+    #append 0
+    auctionCode = category.auction
+    auctionCode = "0" + auctionCode for [0..(7-category.auction.length)]
+    category.auction = auctionCode
     params =
       com: "account"
       t: "dropshipImportDownload"

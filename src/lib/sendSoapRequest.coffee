@@ -38,7 +38,7 @@ sendSoapRequest = (service, name, data) ->
     result
   .catch (e) ->
     #log this.soapClient.lastRequest
-    log e.body
+    #log e.body
     throw new Error e.body
 
 module.exports = sendSoapRequest
