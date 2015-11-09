@@ -47,11 +47,37 @@ getNewItemInfo = (prod, rate) ->
       ItemContentsHtml: getHtmlDescription(prod)
       ItemReturn: getItemReturn()
       ShippingFee: getShippingFee()
-      ChildProductSafeCert:
+      ItemExtra:
         attributes:
-          CertificationType: "NotCert"
+          xmlns: "http://schema.auction.co.kr/Arche.Service.xsd"
+        SafeAuth:
+          attributes:
+            AuthItemType: "SafeAuth"
+            SafeAuthType: "NotAuth"
+        ChildProductSafeCert:
+          attributes:
+            CertificationType: "NotCert"
     options['BrandCode'] = brandCode if brandCode
     options
+
+getUpdateItemInfo = (prod, code, rate) ->
+  options =
+    attributes:
+      xmlns: "http://schema.auction.co.kr/Arche.Sell3.Service.xsd"
+      ItemID: code
+      Price: itemPrice(prod.price, rate)
+      DescriptionVerType: "New"
+      AdvertiseMessage: "[해외직구]"
+      WishKeyword: "해외직구"
+      WishKeywordOptIn: true
+    ItemContentsHtml: getHtmlDescription(prod)
+    ItemExtra:
+      attributes:
+        xmlns: "http://schema.auction.co.kr/Arche.Service.xsd"
+      ChildProductSafeCert:
+        attributes:
+          CertificationType: 'NotCert'
+  Promise.resolve options
 
 getItemReturn = ->
   options =
@@ -70,18 +96,6 @@ getItemReturn = ->
         ReturnTel: "010-8675-1080"
 
 
-getUpdateItemInfo = (prod, code, rate) ->
-  options =
-    attributes:
-      xmlns: "http://schema.auction.co.kr/Arche.Sell3.Service.xsd"
-      ItemID: code
-      Price: itemPrice(prod.price, rate)
-      DescriptionVerType: "New"
-      AdvertiseMessage: "[해외직구]"
-      WishKeyword: "해외직구"
-      WishKeywordOptIn: true
-    ItemContentsHtml: getHtmlDescription(prod)
-  Promise.resolve options
 
 getBrandCode = (brand) ->
   redis.hgetAsync('auctionBrandCode', brand)

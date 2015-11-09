@@ -20,7 +20,7 @@ banggoodPublishers = ->
     category.cids = [category.cids] unless _.isArray category.cids
     #append 0
     auctionCode = category.auction
-    auctionCode = "0" + auctionCode for [0..(7-category.auction.length)]
+    auctionCode = "0" + auctionCode for [0...(8-category.auction.length)]
     category.auction = auctionCode
     params =
       com: "account"
