@@ -54,8 +54,8 @@ parentMain = ->
 childMain = ->
   debug 'childMain started'
   # workers
-  queue.process('shopdogg', config.common.scraper.concurrency, worker.banggood)
-  queue.process('auction', config.common.scraper.concurrency, worker.auction)
+  queue.process('shopdogg', config.common.scraper.concurrency.banggood, worker.banggood)
+  queue.process('auction', config.common.scraper.concurrency.auction, worker.auction)
 
   process.on 'SIGTERM', (sig) ->
     queue.shutdown 5000, (err) ->

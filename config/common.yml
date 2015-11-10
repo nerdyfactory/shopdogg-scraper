@@ -1,7 +1,9 @@
 default: &default
   scraper:
     worker_count: 4
-    concurrency: 7
+    concurrency:
+      banggood: 7
+      auction: 14
     interval: 6000000
 
 development:
