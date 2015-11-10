@@ -14,26 +14,27 @@ lib         = requireDir '../lib/banggood'
 YAML        = require 'yamljs'
 categories  = YAML.load 'config/categories.yml'
 
-banggoodPublishers = ->
-  categories = _.map categories, (category) ->
-    category.cids = category.cids.split(",")
-    category.cids = [category.cids] unless _.isArray category.cids
-    #append 0
-    auctionCode = category.auction
-    auctionCode = "0" + auctionCode for [0...(8-category.auction.length)]
-    category.auction = auctionCode
-    params =
-      com: "account"
-      t: "dropshipImportDownload"
-      d_warehouse: "CN"
-      "d_cid[]": category.cids
-      sortKey: "1"
-      page: "1"
-    category.url = "https://www.banggood.com/index.php?" + qs.stringify(params)
-    category
-
-  log "start banggood publisher!"
-  setTimeout banggoodPublishers, config.common.scraper.interval # this needs to be tested
+banggoodPublishers = (code) ->
+  categories = _.chain categories
+    .map (category) ->
+      category.cids = category.cids.split(",")
+      category.cids = [category.cids] unless _.isArray category.cids
+      return unless category.cids[0] == code
+      #append 0
+      auctionCode = category.auction
+      auctionCode = "0" + auctionCode for [0...(8-category.auction.length)]
+      category.auction = auctionCode
+      params =
+        com: "account"
+        t: "dropshipImportDownload"
+        d_warehouse: "CN"
+        "d_cid[]": category.cids
+        sortKey: "1"
+        page: "1"
+      category.url = "https://www.banggood.com/index.php?" + qs.stringify(params)
+      category
+    .compact()
+    .value()
 
   request.postAsync(lib.reqOptions.login())
   .get(0)

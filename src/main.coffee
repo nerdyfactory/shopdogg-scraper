@@ -22,6 +22,10 @@ main = ->
 
 
 parentMain = ->
+  if process.argv.length < 3
+    console.log "you should specify top level category code!"
+    process.exit()
+
   kue.app.listen 3000
   i = 0
   while i < config.common.scraper.worker_count
@@ -42,9 +46,9 @@ parentMain = ->
     # Log the event
     console.log 'worker ' + oldPID + ' died.'
     console.log 'worker ' + newPID + ' born.'
-
+  
   # url publishers
-  publisher.banggood()
+  publisher.banggood(process.argv[2])
 
 
 childMain = ->
