@@ -135,11 +135,12 @@ getImageList = (images) ->
   opt
 
 getHtmlDescription = (prod) ->
-  desc = "<br><img src='http://i.imgur.com/vgDbMW2.jpg' style='width: 800px;' /><br><br>"
+  #desc = "<img src='http://i.imgur.com/3DL3QQ7.png' style='width: 800px;' /><br><br><img src='http://i.imgur.com/b7lzbbw.jpg' style='width: 800px;' /><br><br>"
+  desc = "<br><img src='http://i.imgur.com/b7lzbbw.jpg' style='width: 800px;' /><br><br>"
   _.each prod.images, (image) ->
     desc = desc + "<img src='#{image}'/><br>"
   desc = desc + prod.description.replace(/\<[ ]*a[^>]+\>/, "").replace(/\<\/a\>/, "")
-  desc = desc + "<br><img alt='' src='http://i.imgur.com/Zvx1sRp.jpg' style='width: 800px;' />"
+  desc = desc + "<br><img src='http://i.imgur.com/EjPJ7W0.jpg' style='width: 800px;' />"
   description =
     attributes:
       ItemHtml: desc
