@@ -8,6 +8,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
   config.vm.network :private_network, ip: "192.168.50.20"
   config.vm.synced_folder "./", "/vagrant", type: "nfs"
+  config.vm.synced_folder "../shopdogg-homepage", "/vagrant/shopdogg-homepage", type: "nfs"
   config.vm.hostname = "shopdogg"
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "4096"
