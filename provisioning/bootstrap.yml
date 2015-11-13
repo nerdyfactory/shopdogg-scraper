@@ -16,7 +16,7 @@
     - name: create admin group
       group: name=admin
     - name: add admin user
-      user: name={{admin_user}} state=present shell=/bin/bash groups=admin
+      user: name={{admin_user}} state=present shell=/bin/bash groups=www-data,admin
     - name: copy /etc/sudoers
       command: cp -f /etc/sudoers /etc/sudoers.tmp
     - name: backup sudoers file
