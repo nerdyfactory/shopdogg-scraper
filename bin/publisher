@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+var require('app-module-path').addPath(__dirname + '/../src/');
+var requireDir  = require('require-dir');
+var publisher   = requireDir('../src/publishers');
+
+if (process.argv.length < 2) {
+  console.log("you should specify top level category code!");
+  process.exit();
+}
+
+publisher.banggood(process.argv[2]).then(function() {
+  console.log("finished to publish products");
+  process.exit();
+});

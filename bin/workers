@@ -1,0 +1,56 @@
+#!/usr/bin/env node
+
+require('app-module-path').addPath(__dirname + '/../src/');
+var cluster     = require('cluster');
+var kue         = require('kue');
+var requireDir  = require('require-dir');
+var config      = require('konfig')();
+var queue       = kue.createQueue();
+var worker      = requireDir('../src/workers');
+
+main = function() {
+  if (cluster.isMaster) {
+    parentMain();
+  } else {
+    childMain();
+  }
+};
+
+parentMain = function() {
+  var i;
+  kue.app.listen(3000);
+  i = 0;
+  while (i < config.common.scraper.worker_count) {
+    cluster.fork();
+    i++;
+  }
+  process.on('SIGTERM', function() {
+    var id;
+    for (id in cluster.workers) {
+      cluster.workers[id].kill();
+    }
+    process.exit(0);
+  });
+  cluster.on('exit', function(deadWorker, code, signal) {
+    var newPID, oldPID;
+    worker = cluster.fork();
+    newPID = worker.process.pid;
+    oldPID = deadWorker.process.pid;
+    console.log('worker ' + oldPID + ' died.');
+    console.log('worker ' + newPID + ' born.');
+  });
+};
+
+childMain = function() {
+  console.log('childMain started');
+  queue.process('shopdogg', config.common.scraper.concurrency.banggood, worker.banggood);
+  queue.process('auction', config.common.scraper.concurrency.auction, worker.auction);
+  process.on('SIGTERM', function(sig) {
+    queue.shutdown(5000, function(err) {
+      console.log('Kue shutdown: ', err || '');
+      process.exit(0);
+    });
+  });
+};
+
+main();
