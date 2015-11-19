@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-var require('app-module-path').addPath(__dirname + '/../src/');
+require('app-module-path').addPath(__dirname + '/../src/');
 var requireDir  = require('require-dir');
 var publisher   = requireDir('../src/publishers');
 
