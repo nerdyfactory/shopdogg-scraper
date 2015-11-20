@@ -40,6 +40,8 @@ getNewItemInfo = (prod, rate) ->
         ItemStatusType: "New"
         DescriptionVerType: "New"
         ItemCode: prod.sku
+        IsPCS: true
+        EnablePCSCoupon: true
         AdvertiseMessage: "[해외직구]"
         WishKeyword: "해외직구"
         WishKeywordOptIn: true
@@ -68,6 +70,8 @@ getUpdateItemInfo = (prod, code, rate) ->
       Price: itemPrice(prod.price, rate)
       DescriptionVerType: "New"
       AdvertiseMessage: "[해외직구]"
+      IsPCS: true
+      EnablePCSCoupon: true
       WishKeyword: "해외직구"
       WishKeywordOptIn: true
     ItemContentsHtml: getHtmlDescription(prod)
